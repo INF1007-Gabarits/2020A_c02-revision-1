@@ -1,66 +1,54 @@
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod-redirect-0.herokuapp.com/)
 
-# ENCORE PLUS DE MAGIE! (chapitre 11.4)
+# Chatbot pour Twitch! (révision)
 
 <!-- Avant de commencer. Consulter les instructions à suivre dans [instructions.md](instructions.md) -->
 
-Nous allons étendre le jeu que nous avons fait au chapitre 11.3 en réarrangeant les classes pour rendre le tout plus modulaire à l'aide de polymorphisme.
+Nous allons écrire un chatbot, c'est-à-dire un programme qui lit le texte dans le clavardage d'un stream Twitch et qui répond à des commandes en utilisant un compte Twitch.
 
-## Avant tout, un mot sur les classes abstraites, l'héritage multiple et le problème du losange
+## Avant tout, il faut un compte pour le chatbot
 
-Comment règle-t-on le problème suivant?
+Les sessions de clavardage associés aux streams Twitch utilisent le protocole IRC (*Internet Relay Chat*) pour communiquer. C'est un vieux protocole (début années 90) très populaire et utilisé pour beaucoup de choses. Pour que votre chatbot puisse se connecter au IRC de Twitch, il lui faut un compte Twitch valide avec lequel se connecter. Vous ne pouvez pas simplement entrer votre nom d'utilisateur et votre mot de passe, il vous faut un jeton d'identification. Ce jeton vous sert essentiellement de mot de passe pour vous connecter au IRC, mais sans réellement utiliser votre mot de passe.
 
-<img src="doc/assets/diamond_problem.png" width="600">
+Vous pouvez utiliser votre propre compte pour le chatbot, ce qui fait que celui-ci va parler pour vous dans le *chat*. Pour générer facilement un jeton, connectez-vous à votre compte Twitch dans votre fureteur puis allez sur https://twitchapps.com/tmi/. On vous demandera la première fois de connecter l'application de génération de jetons à votre compte (vous approuvez), puis on vous donnera un jeton sous la forme `oauth:séquence-de-lettres-et-de-chiffres`.
 
-Références :
+<img src="doc/assets/oauth_token_gen.png">
 
-[Python Course](https://www.python-course.eu/python3_multiple_inheritance.php#The-Diamond-Problem-or-the-,,deadly-diamond-of-death'')<br>
-[Blog de Raymond Hettinger](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)
+C'est ce jeton (incluant le `oauth:`) que vous utilisez comme mot de passe IRC. Écrivez-le en quelque part et ayez-le à portée de main pour faire les exercices.
 
-## Refonte des classes de notre jeu
+## Révision chapitre 7 (fonctions)
 
-## Diagramme des classes
+### Répondre avec une salutation
 
-<img src="doc/assets/game_classes.png">
+TODO: Utilisation sommaire de la classe `TwitchBot` et quel format de callback est attendu.
 
-### Classe de base `character.Character`
+TODO: Callbacks, fermetures lexicales and shit.
 
-On va définir `Character` comme étant une classe abstraite qui possède plusieurs attributs et dont les enfants *doivent* réimplémenter la méthode virtuelle `compute_damage()`. C'est donc une classe qui ne peut pas être utilisée directement. Cette classe ne contient pas les éléments liés aux armes ou aux sorts.
+## Révision chapitre 8 (format de fichiers)
 
-On a la propriété `last_used_move` qui indique la dernière attaque utilisée par `compute_damage()`, et qui est un `OffensiveMove` (classe de base pour toutes les attaques, armes ou autres). Les classes dérivées peuvent changer le comportement de cette propriété.
+### Répondre avec une citation aléatoire
 
-On a aussi `take_damage()` qui définit comment un personnage prend du dommage. Les classes dérivées peuvent changer le comportement de cette méthode, mais n'y sont pas obligées.
+TODO: Rappel sur les fichiers INI et JSON.
 
-La classe abstraite `OffensiveMove` a un nom et une méthode abstraite `can_be_used_by()` qui dit si un personnage passé en paramètre peut se servir de l'attaque.
+TODO: Explication sur le choix aléatoire d'une citation.
 
-## Utilisateurs d'armes et de magies
+## Révision chapitre 9 (bonnes pratiques)
 
-### `Weapon` et `WeaponUser`
+### Passer des arguments au script
 
-On veut une classe qui représente une arme (puissance et niveau minimal) et une classe de personnage qui utilise des armes physiques en combat. Même logique que la dernière fois pour l'affectation
+TODO: Rappel sur `argparse`
 
-### `Spell` et `Spellcaster`
+## Révision chapitre 11 (orientée-objet)
 
-On veut une classe qui représente un sort (puissance, niveau minimal et coût en MP) et une classe de personnage qui utilise des sorts en consommant des MP.
+### Matière additionnelle
 
-### `Magician`
+TODO: `dataclasses`
 
-Dans notre jeu, un magicien est un personnage qui peut utiliser de la magie ou des armes. On a donc tout ce qui est dans `Spellcaster` et dans `WeaponUser`. La seule mécanique qui s'ajoute par-dessus est le choix d'utiliser de la magie ou une arme. On utilise la même logique pour le choix que dans le chapitre 11.3.
+TODO: Décorateurs
 
-### Formules
+### Créer une classe de chatbot qui met tout le reste ensemble
 
-On se rappelle des formules pour calculer le dommage physique (utilisée par `WeaponUser`) :
+TODO: Utilisation attendue de la classe `TwitchBot`; Diagramme de classe de la librairie.
 
-<img src="doc/assets/dmg_eq.png" width="600">
+TODO: Donner une citation aléatoire dans une catégorie ou dans tout.
 
-Où *a* est l'attaquant et *d* est le défendeur. <br>
-*crit* est 2 environ 1/16 (6.25%) du temps, 1 sinon <br>
-*random* est un nombre aléatoire entre 85% et 100%
-
-Si le personnage utilise sa magie (`Spellcaster`), la formule est :
-
-<img src="doc/assets/dmg_eq_mag.png" width="600">
-
-Où *a* est l'attaquant et *d* est le défendeur. <br>
-*crit* est 2 environ 1/8 (12.5%) du temps, 1 sinon <br>
-*random* est un nombre aléatoire entre 85% et 100%
