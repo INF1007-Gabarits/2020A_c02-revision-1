@@ -85,6 +85,7 @@ class TwitchBot(Chatbot):
 	def run(self):
 		self.logger.debug("Listening to chat for commands...")
 		while True:
+			time.sleep(0.010) # Just to yield control of the thread
 			try:
 				msgs = self.receive_msgs()
 				for msg in msgs:
