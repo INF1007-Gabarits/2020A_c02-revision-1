@@ -8,3 +8,5 @@ doc/assets/uml.vsdx
 settings/files_to_update.txt
 settings/test_associations.json
 settings/variables.txt
+_main_version_prof.py
+_my_bot_version_prof.py
