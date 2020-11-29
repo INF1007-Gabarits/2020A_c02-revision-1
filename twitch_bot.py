@@ -133,6 +133,11 @@ class TwitchBot(Chatbot):
 			self.logger.warning(f"Message length {text_length} > {TwitchBot.twitch_text_len_max}")
 		return sent_msg, num_sent_bytes
 
+	def register_command(self, command_name, callback):
+		copied_callback = functools.partial(callback)
+		copied_callback.__doc__ = TwitchBot.format_usage_docstring(command_name, callback.__doc__)
+		super().register_command(command_name.lower(), copied_callback)
+
 	@staticmethod
 	def get_user(prefix):
 		return prefix.split("!", 1)[0]
@@ -148,11 +153,6 @@ class TwitchBot(Chatbot):
 			else:
 				new_docstr += "!" + method_name + " " + docstr
 		return new_docstr
-
-	def register_command(self, command_name, callback):
-		copied_callback = functools.partial(callback)
-		copied_callback.__doc__ = TwitchBot.format_usage_docstring(command_name, callback.__doc__)
-		super().register_command(command_name.lower(), copied_callback)
 
 	def _setup_commands(self):
 		self._register_help_commands()
