@@ -61,11 +61,17 @@ Le code à compléter est dans *ch7.py*
 
 ## Révision chapitre 8 (format de fichiers)
 
+Nous avons vu au chapitre 8 plusieurs formats de fichier, tels que WAV, INI, CSV et JSON.
+
+### Charger les données de connection d'un fichier INI
+
+Dans l'exercice précédent, nous avons écrit directement dans le code source le nom du compte, le jeton d'identification et le channel auquel se connecter. Ce n'est clairement pas une bonne pratique. Nous allons plus charger ces données à partir d'un fichier INI ([data/config.ini](data/config.ini)). Il vous faut donc aller mettre votre nom de compte et votre jeton dans le fichier (sous la section `[login]`). Le nom du channel auquel se connecter est dans la section `[chat]`. C'est évidemment *chosson* pour aujourd'hui si vous voulez que votre bot soit visible à la classe.
+
+Le code à compléter est dans *ch8.py*
+
 ### Répondre avec une citation aléatoire
 
-TODO: Rappel sur les fichiers INI et JSON.
-
-TODO: Explication sur le choix aléatoire d'une citation.
+Dans le fichier [data/quotes.json](data/quotes.json) on a quelques citations de jeux vidéos, catégorisées selon le jeu. On voudrait avoir une commande `!quote` qui retourne une citation aléatoire dans celles présentes dans le fichier. On charge d'abord le fichier JSON (fonction `load_quotes()`). Ensuite, dans `build_quotes_callback()` on crée un callback qui choisit aléatoirement une catégorie, puis une citation aléatoire dans cette catégorie. Notez comment le fichier est construit, c'est-à-dire un dictionnaire dont chaque clé est une catégorie (le nom d'un jeu) et la valeur est une liste de citations.
 
 ## Révision chapitre 9 (bonnes pratiques)
 

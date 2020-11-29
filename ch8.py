@@ -12,23 +12,31 @@ from chatbot import *
 from twitch_bot import *
 
 
+# Un named tuple est une façon simple de créer des tuples avec des éléments nommés (plutôt que juste des index)
 ConfigInfo = namedtuple("ConfigInfo", ["nickname", "password", "channel"])
 
 def load_config(filename):
 	config = configparser.ConfigParser()
 	config.read(filename)
+	# TODO: Extraire le nom du channel, le nom du compte et le mot de passe (jeton) dans les variables.
 	channel = config["chat"]["channel"]
 	bot_nickname = config["login"]["account_name"]
 	bot_password = config["login"]["account_oauth_token"]
 	return ConfigInfo(bot_nickname, bot_password, channel)
 
 def load_quotes(filename):
+	# TODO: Charger le contenu du fichier JSON des citations.
 	return json.load(open(filename, "r", encoding="UTF-8"))
 
 def build_quotes_callback(bot, quotes):
 	def callback(*args):
+		# TODO: Choisir une catégorie au hasard.
 		random_category = random.choice(tuple(quotes.keys()))
+		# TODO: Choisir une citation au hasard dans la catégorie.
 		random_quote = random.choice(quotes[random_category])
+		# Ou bien :
+		#random_category = random.choice(tuple(self.quotes.values()))
+		#random_quote = random.choice(random_category)
 		bot.send_privmsg(random_quote)
 	return callback
 
