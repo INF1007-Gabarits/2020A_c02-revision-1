@@ -37,6 +37,10 @@ On construit un `TwitchBot` en lui donnant un dossier dans lequel mettre les jou
 Exemple:
 ```python
 bot = TwitchBot("mes_journaux")
+bot.register_command(
+    "ma_commande",
+    mon_callback
+)
 bot.connect_and_join(
     le_jeton_oauth,
     le_nom_du_compte_twitch,
@@ -49,9 +53,11 @@ bot.run()
 
 ### Répondre avec une salutation
 
-Le code qui vous est fourni dans les modules
+On veut que le chatbot réponde à la commande `!say_hi` avec un certain message. Il faut donc envoyer un message au serveur. La méthode `send_privmsg()` de `TwitchBot` permet de faire cela. Pour que la commande soie reconnue, il faut l'enregistrer avec `TwitchBot.register_command()`, à laquelle on passe le nom de la commande (sans le `!`) et un callback qui doit prendre un seul paramètre qui est le message qui l'a déclenché. On ne va pas se servir du paramètre pour tout de suite.
 
-TODO: Callbacks, fermetures lexicales and shit.
+Il nous faut donc créer une fonction de rappel qui envoie un message dans le chat à l'aide du bot connecté. Toutefois, on ne veut pas *hardcoder* le bot et le message directement dans la fonction. On va plutôt faire une fonction qui crée le callback à en lui passant le bot et le message. Le callback retourné est ensuite enregistré avec `register_command()`.
+
+Le code à compléter est dans *ch7.py*
 
 ## Révision chapitre 8 (format de fichiers)
 
