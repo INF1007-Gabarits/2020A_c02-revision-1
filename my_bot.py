@@ -2,16 +2,8 @@
 A specific bot linked with the widget server.
 """
 
-import sys
-import time
-import os
 import random
-import argparse
-import subprocess
 
-import requests
-
-from irc import *
 from chatbot import *
 from twitch_bot import *
 

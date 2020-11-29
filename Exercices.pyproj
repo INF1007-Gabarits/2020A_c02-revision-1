@@ -26,14 +26,23 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ch11.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ch8.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ch9.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="chatbot.py" />
+    <Compile Include="ch7.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="irc.py" />
     <Compile Include="main.py" />
     <Compile Include="my_bot.py" />
     <Compile Include="twitch_bot.py" />
-    <Compile Include="utils.py">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -42,6 +51,7 @@
     <Content Include="data\config.ini" />
     <Content Include="data\quotes.json" />
     <Content Include="settings/test_associations.json" />
+    <Content Include="settings\files_to_update.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
