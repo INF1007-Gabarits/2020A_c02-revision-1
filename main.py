@@ -22,7 +22,7 @@ from my_bot import MyBot
 
 
 def main():
-	chapter_example = "ch11"
+	chapter_example = "ch7"
 
 	if chapter_example == "ch7":
 		run_ch7_example()
