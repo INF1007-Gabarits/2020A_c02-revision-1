@@ -18,12 +18,12 @@ class TwitchBot(Chatbot):
 	"""
 	Chat bot base class made specifically for Twitch
 
-	In derived classes, commands handlers (responding to '!<command>' messages) are registered using the `@TwitchBot.command` decorator and must be methods that take a `Chatbot.Command` as parameter (along with self). The method name is used as command name and is not case-sensitive. The method docstring is used as help text if user types !help <command>. The name of the command (preceded or not by !) can be ommitted and will be inserted automatically.
+	In derived classes, commands handlers (responding to '!<command>' messages) are registered using the `@TwitchBot.new_command` decorator and must be methods that take a `Chatbot.Command` as parameter (along with self). The method name is used as command name and is not case-sensitive. The method docstring is used as help text if user types !help <command>. The name of the command (preceded or not by !) can be ommitted and will be inserted automatically.
 
 	Example: 
 	.. code-block:: python
 		class SomeBot(TwitchBot):
-			@TwitchBot.command
+			@TwitchBot.new_command
 			def my_command(self, cmd: Chatbot.Command):
 				'''{some_required_param} [some_optional_param]'''
 				# Do something
@@ -36,7 +36,7 @@ class TwitchBot(Chatbot):
 	"""
 
 	@classmethod
-	def command(cls, fn):
+	def new_command(cls, fn):
 		fn.is_command_function = True
 		return fn
 

@@ -14,6 +14,7 @@ def run_ch11_example():
 	config = load_config(opts.config_file)
 	quotes = load_quotes(opts.quotes_file)
 
+	# TODO: Construire un objet de type `MyBot` avec "logs" comme dossier de journaux et avec les citations extraites du JSON.
 	bot = MyBot("logs", quotes)
 	bot.connect_and_join(config.password, config.nickname, config.channel)
 	bot.run()

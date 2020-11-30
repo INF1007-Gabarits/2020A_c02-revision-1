@@ -25,7 +25,15 @@ class Chatbot:
 
 	@dataclass
 	class Command:
-		privmsg: str
+		"""
+		A command understood by the chatbot.
+
+		:ivar privmsg: The original irc­­.Privmsg object that formed the command.
+		:ivar name: The name of the command, without the prepending command character.
+		:ivar params: The text following the command.
+		"""
+
+		privmsg: irc.Privmsg
 		name: str
 		params: str
 

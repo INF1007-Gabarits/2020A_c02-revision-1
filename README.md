@@ -65,7 +65,7 @@ Nous avons vu au chapitre 8 plusieurs formats de fichier, tels que WAV, INI, CSV
 
 ### Charger les données de connection d'un fichier INI
 
-Dans l'exercice précédent, nous avons écrit directement dans le code source le nom du compte, le jeton d'identification et le channel auquel se connecter. Ce n'est clairement pas une bonne pratique. Nous allons plus charger ces données à partir d'un fichier INI ([data/config.ini](data/config.ini)). Il vous faut donc aller mettre votre nom de compte et votre jeton dans le fichier (sous la section `[login]`). Le nom du channel auquel se connecter est dans la section `[chat]`. C'est évidemment *chosson* pour aujourd'hui si vous voulez que votre bot soit visible à la classe.
+Dans l'exercice précédent, nous avons écrit directement dans le code source le nom du compte, le jeton d'identification et le channel auquel se connecter. Ce n'est clairement pas une bonne pratique. Nous allons plus charger ces données à partir d'un fichier INI ([data/config.ini](data/config.ini)). Il vous faut donc aller mettre votre nom de compte et votre jeton dans le fichier (sous la section `[login]`). Le nom du channel auquel se connecter est dans la section `[chat]`. C'est évidemment *chosson* pour aujourd'hui si vous voulez que votre bot soit visible à la classe. Vous pouvez aussi faire les tests sur votre propre chaine pour ne pas poluer le chatroom du cours.
 
 Le code à compléter est dans *ch8.py*
 
@@ -85,6 +85,8 @@ Dans l'exercice précédent, nous avions chargé les données à partir de fichi
 
 On roule le même code qu'au chapitre 8 (en utilisant `run_ch8_example()`) en passant les noms de fichier extraits de la ligne de commande.
 
+Le code à compléter est dans *ch9.py*
+
 Documentation de `argparse` : https://docs.python.org/3/library/argparse.html#the-add-argument-method
 
 ## Révision chapitre 11 (orientée-objet)
@@ -97,7 +99,20 @@ TODO: Décorateurs
 
 ### Créer une classe de chatbot qui met tout le reste ensemble
 
-TODO: Utilisation attendue de la classe `TwitchBot`; Diagramme de classe de la librairie.
+Malgré nos efforts, notre code de chatbot est assez peu élégant (des callbacks en fermetures lexicales enregistrés manuellement). La classe fournie `TwitchBot`, dont on s'est servie directement jusqu'à présent, est en fait écrite pour être utilisée en héritage. On va donc en hériter dans une classe `MyBot` (fichier *my_bot.py*) et utiliser le décorateur `TwitchBot.new_command` pour enregistrer des commandes. Un exemple est donné dans la *docstring* de `TwitchBot`. Ensuite, on va utilser cette classe au lieu de `TwitchBot` pour construire notre bot dans *ch11.py*.
 
-TODO: Donner une citation aléatoire dans une catégorie ou dans tout.
+#### My name is...
+
+On enregistre une commande `!say_hi` à laquelle le bot répond en insérant son nom dans une certaine ligne de dialogue :
+
+<img src="doc/assets/say_hi_example.png">
+
+Dans cet exemple, le bot utilise le compte *chosson_bot2* pour communiquer.
+
+#### You are likely to be eaten...
+
+On enregistre une commande `!quote` à laquelle le bot répond en chosissant une citation aléatoire dans celles chargées du JSON (comme dans les exemples précédents). Toutefois, on peut choisir la catégorie d'où provient la citation. Si on n'en fournie pas, une catégorie au hasard est choisie (même comportement que les exemples précédents).
+
+<img src="doc/assets/quote_example.png">
+
 
