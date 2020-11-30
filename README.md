@@ -57,6 +57,8 @@ On veut que le chatbot réponde à la commande `!say_hi` avec un certain message
 
 Il nous faut donc créer une fonction de rappel qui envoie un message dans le chat à l'aide du bot connecté. Toutefois, on ne veut pas *hardcoder* le bot et le message directement dans la fonction. On va plutôt faire une fonction qui crée le callback à en lui passant le bot et le message. Le callback retourné est ensuite enregistré avec `register_command()`.
 
+On vous dit d'insérer votre jeton OAuth, votre nom de compte et le channel cible (le chatroom dans lequel votre chatbot va parler). C'est évidemment *chosson* pour aujourd'hui si vous voulez que votre bot soit visible à la classe. Vous pouvez aussi faire les tests sur votre propre chaine pour ne pas poluer le chatroom du cours. En dehors du cours, faites vos tests sur votre propre chaine et ne spammez pas mon chat avec vos chatbot SVP.
+
 Le code à compléter est dans *ch7.py*
 
 ## Révision chapitre 8 (format de fichiers)
@@ -65,7 +67,7 @@ Nous avons vu au chapitre 8 plusieurs formats de fichier, tels que WAV, INI, CSV
 
 ### Charger les données de connection d'un fichier INI
 
-Dans l'exercice précédent, nous avons écrit directement dans le code source le nom du compte, le jeton d'identification et le channel auquel se connecter. Ce n'est clairement pas une bonne pratique. Nous allons plus charger ces données à partir d'un fichier INI ([data/config.ini](data/config.ini)). Il vous faut donc aller mettre votre nom de compte et votre jeton dans le fichier (sous la section `[login]`). Le nom du channel auquel se connecter est dans la section `[chat]`. C'est évidemment *chosson* pour aujourd'hui si vous voulez que votre bot soit visible à la classe. Vous pouvez aussi faire les tests sur votre propre chaine pour ne pas poluer le chatroom du cours.
+Dans l'exercice précédent, nous avons écrit directement dans le code source le nom du compte, le jeton d'identification et le channel auquel se connecter. Ce n'est clairement pas une bonne pratique. Nous allons plus charger ces données à partir d'un fichier INI ([data/config.ini](data/config.ini)). Il vous faut donc aller mettre votre nom de compte et votre jeton dans le fichier (sous la section `[login]`). Le nom du channel auquel se connecter est dans la section `[chat]`.
 
 Le code à compléter est dans *ch8.py*
 
@@ -93,9 +95,37 @@ Documentation de `argparse` : https://docs.python.org/3/library/argparse.html#th
 
 ### Matière additionnelle
 
-TODO: `dataclasses`
+Les classes fournies utilisent des notions qu'on n'a pas encore vues dans le cours, particulièrement les *dataclasses* et les décorateurs.
 
-TODO: Décorateurs
+#### Décorateurs (très optionel)
+
+On s'est déjà servi de décorateurs jusqu'à présent, tels que `@property`, `@staticmethod` et `@abstractmethod`, mais nous n'avons jamais compris comment ils fonctionnent. Nous n'allons pas en faire dans l'exercice qui suit non plus, mais si vous voulez comprendre comment est implémenté le décorateur `@TwitchBot.new_command`, vous aurez besoin des bases.
+
+Vous trouverez sur [realpython.com](https://realpython.com/) un excellent [tutoriel sur les décorateurs](https://realpython.com/primer-on-python-decorators/). Vous n'en avez pas besoin pour le cours INF1007, mais ça peut appronfondir votre maîtrise du Python si vous êtes curieux. C'est en gros nos chapitres 7 et 11 sur stéroïdes.
+
+#### Dataclasses
+
+Il nous arrive parfois de vouloir écrire une classe simple qui ne fait que contenir des valeurs accessibles publiquement, chacune ayant un type précis et sans avoir besoin de méthodes d'accès et de modification particulières. Pour ce faire, il faut quand même écrire un `__init__()` qui initialise les attributs qu'on veut et un `__repr__()` qui est somme toute assez trivial (on formate les données une à la suite de l'autre). Ça fait beaucoup de code qui ne sert pas à grand chose, ou du *boilerplate* comme on dit.
+
+Une addition relativement récente au Python (dans 3.7) est l'introduction des *data classes* (module `dataclasses`). Une *data class* est une classe contenant principalement des données (quoiqu'elle peut avoir des méthodes aussi). On la crée à l'aide du décorateur `@dataclass` comme suit :
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class InventoryItem:
+    nickname: str
+    unit_price: float
+    available_qty: int = 0
+
+parrots = InventoryItem("Parrot", 420.69)
+eggs = InventoryItem("Egg x12", 3.99, 42)
+parrots.available_qty += 1
+print(parrots)
+print(eggs)
+```
+
+Encore une fois, [realpython.com](https://realpython.com/) a un [guide sur les *data classes*](https://realpython.com/python-data-classes/) assez complet que vous pouvez consulter pour plus de détails.
 
 ### Créer une classe de chatbot qui met tout le reste ensemble
 
